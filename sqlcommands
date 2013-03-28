@@ -1,0 +1,24 @@
+
+1. CREATE TABLE Books ( Id int NOT NULL AUTO_INCREMENT, 
+   BookName varchar(255) NOT NULL, AuthorName varchar(255),
+   ISBN varchar(255), 
+   Publisher varchar(255), 
+   TotalCopies int, 
+   AvailableCopies int, PRIMARY KEY(Id) );
+
+2. CREATE TABLE Checkout(transaction_id int not null auto_increment,
+   book_id int, 
+   username varchar(255),
+   primary key(transaction_id),
+   foreign key(book_id) references books(Id),
+   foreign key(username) references users(username));
+
+3. create table users(FirstName varchar(255) NOT NULL,
+   Surname varchar(255),
+   Age int,
+   Gender varchar(255),
+   UserName varchar(255),
+   Password varchar(255),
+   UNIQUE(Username));
+
+
