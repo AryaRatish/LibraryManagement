@@ -2,7 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
-    
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar" %>
+<%@page import="java.util.GregorianCalendar" %>
+<%@page import="java.text.SimpleDateFormat" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -74,8 +77,20 @@ rs = statement.executeQuery("SELECT * FROM books");%>
 <th>Publisher</th>
 <th>Total Copies</th>
 <th>Available Copies</th>
+<th>Date of Checkout</th>
+<th>Date of Return</th>
 <th/>
 </thead>
+<% 
+   SimpleDateFormat dateFormatter = new SimpleDateFormat();
+   
+	Date today = new Date();
+   String todayString = dateFormatter.format(today);
+   System.out.println(todayString);
+   Calendar	calendar = new GregorianCalendar();
+   calendar.add(Calendar.DAY_OF_YEAR, 7);
+   Date sevenDaysAfterNow = calendar.getTime();
+   String sevenDaysAfterNowString = dateFormatter.format(sevenDaysAfterNow);%>
 <% while(rs.next()) {
 	%>
 	<tr align='center'>
@@ -86,7 +101,9 @@ rs = statement.executeQuery("SELECT * FROM books");%>
 	<td><%=rs.getString("publisher")%></td>
     <td><%=rs.getInt("totalcopies")%></td>
 	<td><%=rs.getInt("availablecopies")%></td>
-    <td><input type='radio' name='bkgroup1' value=<%=rs.getInt("id")%>></td>
+	<td><input type="text" name="dateofcheckout" value=<%= todayString %> /></td>
+	<td><input type="text" name="dateofreturn" value=<%= sevenDaysAfterNowString %> /></td>
+    <td><input type='radio' name='bkgroup1' value=<%=rs.getInt("id")%> /></td>
 	</tr>
 <%}%>
    </table>
@@ -94,11 +111,13 @@ rs = statement.executeQuery("SELECT * FROM books");%>
 User name:<input type='text' name='username' value="<%=checkout.getUserName()%>"><br/><br/>
 <input type='submit' name='checkout' value='Checkout book'/>
 <input type='submit' name='return' value='Return book'/>
+
 </form>
 <%rs.close();
 %>
 
 </form>
+<p><a href="addBook.jsp">Add a book</a></p>
 <center>Click <a href="index.jsp">here</a> to log out.</center>
 </body>
 </html>

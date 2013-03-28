@@ -27,11 +27,8 @@ This is the home page for Library Management System.
         Password: <input type="password" name="password" size="20">
         <br/><br/>
         <input type="submit" value="Sign in">
-        
-        <h3>Admin Section</h3>
-        <p> <a href="addUser.jsp">Add a new user</a></p>
-        <p><a href="addBook.jsp">Add a book</a></p>
-        <p><a href="checkOut.jsp">Checkout/Return</a>
-    </form>
+        </form>
+<p> Not registered yet? Click <a href="addUser.jsp" >here</a> to register.
+    
 </body>
 </html>
