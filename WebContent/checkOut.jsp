@@ -77,8 +77,6 @@ rs = statement.executeQuery("SELECT * FROM books");%>
 <th>Publisher</th>
 <th>Total Copies</th>
 <th>Available Copies</th>
-<th>Date of Checkout</th>
-<th>Date of Return</th>
 <th/>
 </thead>
 <% 
@@ -101,14 +99,20 @@ rs = statement.executeQuery("SELECT * FROM books");%>
 	<td><%=rs.getString("publisher")%></td>
     <td><%=rs.getInt("totalcopies")%></td>
 	<td><%=rs.getInt("availablecopies")%></td>
-	<td><input type="text" name="dateofcheckout" value=<%= todayString %> /></td>
-	<td><input type="text" name="dateofreturn" value=<%= sevenDaysAfterNowString %> /></td>
+	
     <td><input type='radio' name='bkgroup1' value=<%=rs.getInt("id")%> /></td>
 	</tr>
 <%}%>
+
+
+
+
+
    </table>
 <br/><br/>
 User name:<input type='text' name='username' value="<%=checkout.getUserName()%>"><br/><br/>
+Date of Checkout:<input type="text" name="dateofcheckout" value=<%= todayString %> />
+Date of Return:<input type="text" name="dateofreturn" value=<%= sevenDaysAfterNowString %> />
 <input type='submit' name='checkout' value='Checkout book'/>
 <input type='submit' name='return' value='Return book'/>
 
