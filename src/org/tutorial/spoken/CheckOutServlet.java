@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +51,7 @@ public class CheckOutServlet extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(
 					"jdbc:mysql://127.0.0.1:3306/library", "root", "root123");
-			stmt = con
-					.prepareStatement("select username from users where username=?");
+			stmt = con.prepareStatement("select username from users where username=?");
 			stmt.setString(1, request.getParameter("username"));
 			rs = stmt.executeQuery();
 			String aTemp1 = null;
@@ -66,6 +66,8 @@ public class CheckOutServlet extends HttpServlet {
 			// String bookName=request.getParameter("bookname");
 			String checkout_book = request.getParameter("checkout");
 			String return_book = request.getParameter("return");
+			String dateOfCheckout=request.getParameter("dateofcheckout");
+			String returndate=request.getParameter("dateofreturn");
 			String id = request.getParameter("bkgroup1");
 			int book_id = Integer.parseInt(id);
 
@@ -107,6 +109,8 @@ public class CheckOutServlet extends HttpServlet {
 
 				}
 
+				SimpleDateFormat dateFormat = new SimpleDateFormat();
+				dateFormat.applyPattern("MM/dd/yy");
 				if (flag == 0 && checkout_book != null) {
 
 					pst = con
@@ -119,9 +123,11 @@ public class CheckOutServlet extends HttpServlet {
 						bname = rs3.getString(1);
 						if (oldcopies > 0) {
 							if (cflag == 0) {
-								pst2 = con.prepareStatement("insert into checkout values(null,?,?)");
+								pst2 = con.prepareStatement("insert into checkout values(null,?,?,?,?)");
 								pst2.setString(2, userName);
 								pst2.setInt(1, book_id);
+								pst2.setDate(3, new java.sql.Date(dateFormat.parse(returndate).getTime()));
+								pst2.setDate(4, new java.sql.Date(dateFormat.parse(dateOfCheckout).getTime()));
 								pst2.executeUpdate();
 								oldcopies -= 1;
 								pst4 = con.prepareStatement("update books set availablecopies=? where id=?");
