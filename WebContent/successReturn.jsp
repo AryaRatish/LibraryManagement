@@ -8,6 +8,7 @@
 <title>Library Management System: Return Book Success</title>
 </head>
 <body bgcolor='white'>
+<form action="AdminSection" method="post">
 <!-- Page Heading -->
 <table border='1' cellpadding='5' cellspacing='0' width='400'>
 <tr bgcolor='#CCCCFF' align='center' valign='center' height='20'>
@@ -18,8 +19,10 @@
  %>
 <p>
 Your request to return Book ID<i> <%=return_book.getBookId() %></i> by User ID <%=return_book.getUserName() %> was successful.
-Click <a href='checkOut.jsp'>here</a> to try another checkout/return.<br/>
+<!-- Click <a href='adminsection.jsp'>here</a> to try another checkout/return.<br/> -->
+<input type="submit" value="checkoutbook" name="menuselection">Click here to try another checkout
 </p>
 <center>Click <a href="index.jsp">here</a> to log out.</center>
+</form>
 </body>
 </html>

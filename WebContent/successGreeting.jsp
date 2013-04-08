@@ -8,17 +8,6 @@
 page import="java.sql.*"
 %>
 
-<%
-
-String connectionURL = "jdbc:mysql://localhost:3306/library";
-
-Connection connection = null;
-
-Statement statement = null;
-
-ResultSet rs = null,rs2 = null;
-
-%>
 
 <html>
 <head>

@@ -36,6 +36,14 @@
     <servlet-name>GreetingServlet</servlet-name>
     <url-pattern>/GreetingServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>AdminSection</servlet-name>
+    <servlet-class>org.tutorial.spoken.AdminSection</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminSection</servlet-name>
+    <url-pattern>/AdminSection</url-pattern>
+  </servlet-mapping>  
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

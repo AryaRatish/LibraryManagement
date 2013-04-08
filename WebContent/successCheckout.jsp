@@ -18,7 +18,7 @@
  %>
 <p>
 Your request to checkout Book ID<i> <%=checkout.getBookId() %></i> by  <%=checkout.getUserName() %> was successful.
-Click <a href='checkOut.jsp'>here</a> to try another checkout/return.<br/>
+Click <a href='adminsection.jsp'>here</a> to try another checkout/return.<br/>
 </p>
 <center>Click <a href="index.jsp">here</a> to log out.</center>
 </body>

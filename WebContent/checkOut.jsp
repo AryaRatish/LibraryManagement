@@ -1,11 +1,14 @@
 <%@page import="org.tutorial.spoken.model.CheckOut"%>
+<%@page import="org.tutorial.spoken.model.Book"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar" %>
 <%@page import="java.util.GregorianCalendar" %>
-<%@page import="java.text.SimpleDateFormat" %>    
+<%@page import="java.text.SimpleDateFormat" %> 
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,18 +25,42 @@
 <p>
 This form allows you to checkout and return a book.
 </p>
-
 <%
 
-String connectionURL = "jdbc:mysql://localhost:3306/library";
+List<Book> books = (ArrayList<Book>)request.getAttribute("books");
+%>	
+<form action='CheckOutServlet' method='POST'>
+<table width='100%' border='1'>
+<thead align='center'>
+<th>Book Id</th>
+<th>Book Name</th>
+<th>Author Name</th>
+<th>ISBN</th>
+<th>Publisher</th>
+<th>Total Copies</th>
+<th>Available Copies</th>
+</thead>
+<%
+for(Book book:books){
+%>	
+	<tr align='center'>
+		<td><%=book.getBookId()%></td>
+		<td><%=book.getBookName()%></td>
+		<td><%=book.getAuthorName()%></td>
+		<td><%=book.getISBN()%></td>
+		<td><%=book.getPublisher()%></td>
+		<td><%=book.getTotalCopies()%></td>
+		<td><%=book.getAvailCopies() %></td>
+		<td><input type='radio' name='bkgroup1' value=<%=book.getBookId()%> /></td>
 
-Connection connection = null;
-
-Statement statement = null;
-
-ResultSet rs = null,rs2 = null;
-
+	</tr>
+<%
+}
 %>
+</table>
+
+<br/><br/><br/><br/>
+
 
 <%
 	CheckOut checkout = new CheckOut();
@@ -57,28 +84,7 @@ ResultSet rs = null,rs2 = null;
 	}
 %>
 
-<%
 
-Class.forName("com.mysql.jdbc.Driver").newInstance();
-
-connection = DriverManager.getConnection(connectionURL, 
-"root","root123");
-
-statement = connection.createStatement();
-
-rs = statement.executeQuery("SELECT * FROM books");%>
-<form action='CheckOutServlet' method='POST'>
-<table width='100%' border='1'>
-<thead align='center'>
-<th>Book Id</th>
-<th>Book Name</th>
-<th>Author Name</th>
-<th>ISBN</th>
-<th>Publisher</th>
-<th>Total Copies</th>
-<th>Available Copies</th>
-<th/>
-</thead>
 <% 
    SimpleDateFormat dateFormatter = new SimpleDateFormat();
    
@@ -89,39 +95,17 @@ rs = statement.executeQuery("SELECT * FROM books");%>
    calendar.add(Calendar.DAY_OF_YEAR, 7);
    Date sevenDaysAfterNow = calendar.getTime();
    String sevenDaysAfterNowString = dateFormatter.format(sevenDaysAfterNow);%>
-<% while(rs.next()) {
-	%>
-	<tr align='center'>
-	<td><%=rs.getInt("id")%></td>
-    <td><%=rs.getString("bookName")%></td>
-    <td><%=rs.getString("authorName")%></td>
-	<td><%=rs.getString("ISBN")%></td>
-	<td><%=rs.getString("publisher")%></td>
-    <td><%=rs.getInt("totalcopies")%></td>
-	<td><%=rs.getInt("availablecopies")%></td>
-	
-    <td><input type='radio' name='bkgroup1' value=<%=rs.getInt("id")%> /></td>
-	</tr>
-<%}%>
 
-
-
-
-
-   </table>
-<br/><br/>
 User name:<input type='text' name='username' value="<%=checkout.getUserName()%>"><br/><br/>
 Date of Checkout:<input type="text" name="dateofcheckout" value=<%= todayString %> />
 Date of Return:<input type="text" name="dateofreturn" value=<%= sevenDaysAfterNowString %> />
 <input type='submit' name='checkout' value='Checkout book'/>
 <input type='submit' name='return' value='Return book'/>
 
-</form>
-<%rs.close();
-%>
+
 
 </form>
-<p><a href="addBook.jsp">Add a book</a></p>
+
 <center>Click <a href="index.jsp">here</a> to log out.</center>
 </body>
 </html>

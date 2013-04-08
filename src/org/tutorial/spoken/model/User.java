@@ -57,5 +57,8 @@ public class User {
 		this.password=password;
 	}
 	
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 
 }
